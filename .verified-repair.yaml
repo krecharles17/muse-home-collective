@@ -20,5 +20,6 @@ families:
   - name: unit
     command: ["npx", "--no-install", "vitest", "run", "src/test"]
     failure_code: unit.behavior_regression
+    severe: true
     failure_exit_codes: [1]
     entry_modules: ["src/test/catalog.test.ts", "src/test/cart.test.ts"]

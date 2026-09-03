@@ -14,7 +14,14 @@ const Index = () => {
   const newProducts = getNewProducts(products).slice(0, 8);
   const latestProducts = products.slice(0, 4);
   const displayedCollections = collections.slice(0, 6);
-  const featuredCollection = collections[0];
+  const featuredCollection = collections[0] ?? {
+    id: "",
+    name: "Collections",
+    slug: "",
+    description: "Curated pieces for considered spaces",
+    image: "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=1920&q=80",
+    heroImage: "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=1920&q=80",
+  };
   const heroRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: heroRef,

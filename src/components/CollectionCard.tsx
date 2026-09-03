@@ -4,12 +4,14 @@ import { ArrowRight } from "lucide-react";
 import { Collection } from "@/data/products";
 
 interface CollectionCardProps {
-  collection: Collection;
+  collection?: Collection;
   index?: number;
   variant?: "default" | "wide" | "tall";
 }
 
 export const CollectionCard = ({ collection, index = 0, variant = "default" }: CollectionCardProps) => {
+  if (!collection) return null;
+
   return (
     <motion.article
       initial={{ opacity: 0, y: 40 }}

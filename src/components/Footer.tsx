@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
-import { collections } from "@/data/products";
+import { useCollections } from "@/hooks/useCatalog";
 
 export const Footer = () => {
+  const { collections } = useCollections();
+
   return (
     <footer className="bg-foreground text-background">
       {/* Top bar */}

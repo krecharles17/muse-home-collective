@@ -14,7 +14,104 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      collections: {
+        Row: {
+          created_at: string
+          description: string
+          hero_image: string | null
+          id: string
+          image: string
+          name: string
+          slug: string
+          sort_order: number
+        }
+        Insert: {
+          created_at?: string
+          description?: string
+          hero_image?: string | null
+          id: string
+          image?: string
+          name: string
+          slug: string
+          sort_order?: number
+        }
+        Update: {
+          created_at?: string
+          description?: string
+          hero_image?: string | null
+          id?: string
+          image?: string
+          name?: string
+          slug?: string
+          sort_order?: number
+        }
+        Relationships: []
+      }
+      products: {
+        Row: {
+          collection_id: string
+          created_at: string
+          description: string
+          dimensions: string | null
+          featured: boolean
+          id: string
+          images: string[]
+          is_new: boolean
+          long_description: string
+          materials: string
+          name: string
+          price: number
+          rating: number
+          review_count: number
+          slug: string
+          stock: number
+        }
+        Insert: {
+          collection_id: string
+          created_at?: string
+          description?: string
+          dimensions?: string | null
+          featured?: boolean
+          id: string
+          images?: string[]
+          is_new?: boolean
+          long_description?: string
+          materials?: string
+          name: string
+          price: number
+          rating?: number
+          review_count?: number
+          slug: string
+          stock?: number
+        }
+        Update: {
+          collection_id?: string
+          created_at?: string
+          description?: string
+          dimensions?: string | null
+          featured?: boolean
+          id?: string
+          images?: string[]
+          is_new?: boolean
+          long_description?: string
+          materials?: string
+          name?: string
+          price?: number
+          rating?: number
+          review_count?: number
+          slug?: string
+          stock?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "products_collection_id_fkey"
+            columns: ["collection_id"]
+            isOneToOne: false
+            referencedRelation: "collections"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never

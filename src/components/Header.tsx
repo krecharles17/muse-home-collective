@@ -24,6 +24,7 @@ export const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const { items } = useWishlist();
+  const { collections } = useCollections();
 
   useEffect(() => {
     const handleScroll = () => {

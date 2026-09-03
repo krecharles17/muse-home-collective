@@ -3,6 +3,8 @@ import { ArrowRight } from "lucide-react";
 import { useCollections } from "@/hooks/useCatalog";
 
 export const Footer = () => {
+  const { collections } = useCollections();
+
   return (
     <footer className="bg-foreground text-background">
       {/* Top bar */}

@@ -5,14 +5,16 @@ import { useRef } from "react";
 import { Layout } from "@/components/Layout";
 import { ProductCard } from "@/components/ProductCard";
 import { CollectionCard } from "@/components/CollectionCard";
-import { collections, getNewProducts, products } from "@/data/products";
+import { getNewProducts } from "@/data/products";
+import { useCatalog } from "@/hooks/useCatalog";
 import { Button } from "@/components/ui/button";
 
 const Index = () => {
-  const newProducts = getNewProducts();
+  const { collections, products } = useCatalog();
+  const newProducts = getNewProducts(products).slice(0, 8);
   const latestProducts = products.slice(0, 4);
   const displayedCollections = collections.slice(0, 6);
-  const featuredCollection = collections[0]; // Lighting
+  const featuredCollection = collections[0];
   const heroRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: heroRef,

@@ -5,7 +5,8 @@ import { Heart, ChevronLeft, ChevronRight, ArrowRight, ShoppingBag } from "lucid
 import { Layout } from "@/components/Layout";
 import { ProductCard } from "@/components/ProductCard";
 import { QuantitySelector } from "@/components/QuantitySelector";
-import { getProductBySlug, getRelatedProducts, collections } from "@/data/products";
+import { getProductBySlug, getRelatedProducts } from "@/data/products";
+import { useCatalog } from "@/hooks/useCatalog";
 import { useWishlist } from "@/hooks/useWishlist";
 import { useCart } from "@/hooks/useCart";
 import { Button } from "@/components/ui/button";
@@ -14,12 +15,31 @@ import { cn } from "@/lib/utils";
 
 const ProductDetail = () => {
   const { slug } = useParams<{ slug: string }>();
-  const product = getProductBySlug(slug || "");
+  const { collections, products, isLoading } = useCatalog();
+  const product = getProductBySlug(products, slug || "");
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const { addItem: addToWishlist, removeItem: removeFromWishlist, isInWishlist } = useWishlist();
   const { addItem: addToCart } = useCart();
   const { toast } = useToast();
+
+  if (isLoading) {
+    return (
+      <Layout>
+        <div className="container-wide py-28">
+          <div className="grid md:grid-cols-2 gap-12 animate-pulse">
+            <div className="aspect-[4/5] bg-muted" />
+            <div className="space-y-4">
+              <div className="h-4 w-1/4 bg-muted" />
+              <div className="h-10 w-2/3 bg-muted" />
+              <div className="h-4 w-full bg-muted" />
+              <div className="h-4 w-5/6 bg-muted" />
+            </div>
+          </div>
+        </div>
+      </Layout>
+    );
+  }
 
   if (!product) {
     return (
@@ -38,7 +58,7 @@ const ProductDetail = () => {
   }
 
   const inWishlist = isInWishlist(product.id);
-  const relatedProducts = getRelatedProducts(product.id);
+  const relatedProducts = getRelatedProducts(products, product.id);
   const collection = collections.find((c) => c.id === product.collection);
 
   const handleWishlistToggle = () => {

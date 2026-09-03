@@ -4,7 +4,8 @@ import { motion } from "framer-motion";
 import { ArrowRight, ChevronDown } from "lucide-react";
 import { Layout } from "@/components/Layout";
 import { ProductCard } from "@/components/ProductCard";
-import { products, collections, getCollectionBySlug } from "@/data/products";
+import { getCollectionBySlug } from "@/data/products";
+import { useCatalog } from "@/hooks/useCatalog";
 import { Button } from "@/components/ui/button";
 import {
   Select,
@@ -29,6 +30,7 @@ const Products = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const activeCollection = searchParams.get("collection") || "all";
   const activeSort = (searchParams.get("sort") as SortOption) || "featured";
+  const { collections, products, isLoading } = useCatalog();
 
   const filteredAndSortedProducts = useMemo(() => {
     let result = [...products];
@@ -62,10 +64,10 @@ const Products = () => {
     }
 
     return result;
-  }, [activeCollection, activeSort]);
+  }, [activeCollection, activeSort, products, collections]);
 
   const currentCollection = activeCollection !== "all"
-    ? getCollectionBySlug(activeCollection)
+    ? getCollectionBySlug(collections, activeCollection)
     : null;
 
   const handleFilterChange = (slug: string) => {
@@ -191,7 +193,17 @@ const Products = () => {
       {/* Products Grid */}
       <section className="py-14 md:py-20">
         <div className="container-full">
-          {filteredAndSortedProducts.length > 0 ? (
+          {isLoading ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 md:gap-10">
+              {Array.from({ length: 8 }).map((_, i) => (
+                <div key={i} className="animate-pulse">
+                  <div className="aspect-[4/5] bg-muted mb-5" />
+                  <div className="h-3 w-1/3 bg-muted mb-2" />
+                  <div className="h-4 w-2/3 bg-muted" />
+                </div>
+              ))}
+            </div>
+          ) : filteredAndSortedProducts.length > 0 ? (
             <>
               <div className="flex items-center justify-between mb-10">
                 <p className="text-sm text-muted-foreground">

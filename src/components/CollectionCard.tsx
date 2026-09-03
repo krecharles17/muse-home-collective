@@ -34,6 +34,8 @@ export const CollectionCard = ({ collection, index = 0, variant = "default" }: C
           <img
             src={collection.image}
             alt={collection.name}
+            loading="lazy"
+            decoding="async"
             className="w-full h-full object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-110"
           />
 

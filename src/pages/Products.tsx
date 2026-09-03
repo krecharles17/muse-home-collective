@@ -70,6 +70,8 @@ const Products = () => {
               "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1920&q=80"
             }
             alt={currentCollection?.name || "All Products"}
+            decoding="async"
+            fetchPriority="high"
             className="w-full h-full object-cover transition-opacity duration-700"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-charcoal/60 via-charcoal/20 to-charcoal/10" />

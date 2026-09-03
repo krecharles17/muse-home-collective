@@ -330,6 +330,8 @@ const Checkout = () => {
                         <img
                           src={item.product.images[0]}
                           alt={item.product.name}
+                          loading="lazy"
+                          decoding="async"
                           className="w-full h-full object-cover"
                         />
                       </div>

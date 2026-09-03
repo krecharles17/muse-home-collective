@@ -22,7 +22,9 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:db": "vitest run tests/db.catalog.test.ts",
-    "test:repair": "vitest run tests/repair.scenario.test.ts"
+    "test:repair": "vitest run tests/repair.scenario.test.ts",
+    "test:integration": "node scripts/require-database.mjs && vitest run tests/db.catalog.test.ts tests/repair.scenario.test.ts",
+    "check": "npm run typecheck && npm run lint && npm run build && vitest run src/test"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",

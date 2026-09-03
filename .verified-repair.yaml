@@ -1,0 +1,24 @@
+families:
+  - name: typecheck
+    command: ["npx", "--no-install", "tsc", "--noEmit"]
+    failure_code: typecheck.invalid_type
+    severe: true
+    failure_exit_codes: [2]
+    entry_modules: null
+  - name: lint
+    command: ["npx", "--no-install", "eslint", "."]
+    failure_code: lint.invalid_source
+    severe: true
+    failure_exit_codes: [1]
+    entry_modules: null
+  - name: build
+    command: ["npm", "run", "build"]
+    failure_code: build.compilation_failed
+    severe: true
+    failure_exit_codes: [1]
+    entry_modules: null
+  - name: unit
+    command: ["npx", "--no-install", "vitest", "run", "src/test"]
+    failure_code: unit.behavior_regression
+    failure_exit_codes: [1]
+    entry_modules: ["src/test/catalog.test.ts", "src/test/cart.test.ts"]

@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { ArrowRight, ChevronDown } from "lucide-react";
 import { Layout } from "@/components/Layout";
 import { ProductCard } from "@/components/ProductCard";
-import { getCollectionBySlug } from "@/data/products";
+import { filterAndSortProducts, getCollectionBySlug, type ProductSort } from "@/data/products";
 import { useCatalog } from "@/hooks/useCatalog";
 import { Button } from "@/components/ui/button";
 import {
@@ -16,9 +16,7 @@ import {
 } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
 
-type SortOption = "featured" | "newest" | "price-asc" | "price-desc" | "name-asc";
-
-const sortOptions: { value: SortOption; label: string }[] = [
+const sortOptions: { value: ProductSort; label: string }[] = [
   { value: "featured", label: "Featured" },
   { value: "newest", label: "Newest" },
   { value: "price-asc", label: "Price: Low to High" },
@@ -29,42 +27,13 @@ const sortOptions: { value: SortOption; label: string }[] = [
 const Products = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const activeCollection = searchParams.get("collection") || "all";
-  const activeSort = (searchParams.get("sort") as SortOption) || "featured";
+  const activeSort = (searchParams.get("sort") as ProductSort) || "featured";
   const { collections, products, isLoading } = useCatalog();
 
-  const filteredAndSortedProducts = useMemo(() => {
-    let result = [...products];
-
-    // Filter by collection
-    if (activeCollection !== "all") {
-      const collection = collections.find((c) => c.slug === activeCollection);
-      if (collection) {
-        result = result.filter((product) => product.collection === collection.id);
-      }
-    }
-
-    // Sort
-    switch (activeSort) {
-      case "newest":
-        result = result.filter((p) => p.new).concat(result.filter((p) => !p.new));
-        break;
-      case "price-asc":
-        result.sort((a, b) => a.price - b.price);
-        break;
-      case "price-desc":
-        result.sort((a, b) => b.price - a.price);
-        break;
-      case "name-asc":
-        result.sort((a, b) => a.name.localeCompare(b.name));
-        break;
-      case "featured":
-      default:
-        result = result.filter((p) => p.featured).concat(result.filter((p) => !p.featured));
-        break;
-    }
-
-    return result;
-  }, [activeCollection, activeSort, products, collections]);
+  const filteredAndSortedProducts = useMemo(
+    () => filterAndSortProducts(products, collections, activeCollection, activeSort),
+    [activeCollection, activeSort, products, collections],
+  );
 
   const currentCollection = activeCollection !== "all"
     ? getCollectionBySlug(collections, activeCollection)

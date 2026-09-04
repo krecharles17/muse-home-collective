@@ -25,6 +25,35 @@ export interface Product {
   new?: boolean;
 }
 
+export type ProductSort = "featured" | "newest" | "price-asc" | "price-desc" | "name-asc";
+
+export const filterAndSortProducts = (
+  products: Product[],
+  collections: Collection[],
+  collectionSlug: string,
+  sort: ProductSort,
+): Product[] => {
+  let result = [...products];
+  if (collectionSlug !== "all") {
+    const collection = collections.find((candidate) => candidate.slug === collectionSlug);
+    result = collection ? result.filter((product) => product.collection === collection.id) : [];
+  }
+
+
+  switch (sort) {
+    case "newest":
+      return result.filter((product) => product.new).concat(result.filter((product) => !product.new));
+    case "price-asc":
+      return result.sort((a, b) => a.price - b.price);
+    case "price-desc":
+      return result.sort((a, b) => b.price - a.price);
+    case "name-asc":
+      return result.sort((a, b) => a.name.localeCompare(b.name));
+    case "featured":
+      return result.filter((product) => product.featured).concat(result.filter((product) => !product.featured));
+  }
+};
+
 export const getProductsByCollection = (products: Product[], collectionId: string): Product[] =>
   products.filter((product) => product.collection === collectionId);
 

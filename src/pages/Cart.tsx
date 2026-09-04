@@ -87,6 +87,8 @@ const Cart = () => {
                       <img
                         src={item.product.images[0]}
                         alt={item.product.name}
+                        loading="lazy"
+                        decoding="async"
                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                       />
                     </Link>
@@ -118,6 +120,7 @@ const Cart = () => {
                         />
                         <button
                           onClick={() => removeItem(item.product.id)}
+                          aria-label={`Remove ${item.product.name} from bag`}
                           className="p-2 text-muted-foreground hover:text-destructive transition-colors"
                         >
                           <Trash2 className="w-5 h-5" />

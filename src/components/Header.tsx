@@ -43,7 +43,7 @@ export const Header = () => {
           : "bg-background/80 backdrop-blur-sm border-b border-transparent"
       )}
     >
-      <nav className="container-full">
+      <nav className="container-full" aria-label="Primary navigation">
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
           <Link
@@ -108,7 +108,10 @@ export const Header = () => {
             {/* Wishlist Icon with Tooltip */}
             <Tooltip>
               <TooltipTrigger asChild>
-                <button className="relative p-2 hover:bg-accent transition-colors duration-300 group">
+                <button
+                  className="relative p-2 hover:bg-accent transition-colors duration-300 group"
+                  aria-label={`Wishlist with ${items.length} ${items.length === 1 ? "item" : "items"}`}
+                >
                   <Heart className="w-5 h-5 transition-transform duration-300 group-hover:scale-110" />
                   <AnimatePresence>
                     {items.length > 0 && (
@@ -152,6 +155,8 @@ export const Header = () => {
             <button
               className="md:hidden p-2 hover:bg-accent transition-colors duration-300"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+              aria-expanded={mobileMenuOpen}
             >
               <AnimatePresence mode="wait">
                 {mobileMenuOpen ? (

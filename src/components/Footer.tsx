@@ -32,10 +32,12 @@ export const Footer = () => {
                 <input
                   type="email"
                   placeholder="Your email"
+                  aria-label="Email address"
                   className="flex-1 h-12 px-4 text-sm bg-background/5 border border-background/15 text-background placeholder:text-background/30 focus:outline-none focus:border-background/40 transition-colors"
                 />
                 <button
                   type="submit"
+                  aria-label="Subscribe to newsletter"
                   className="h-12 px-5 text-sm font-medium bg-background text-foreground hover:bg-background/90 transition-colors"
                 >
                   <ArrowRight className="w-4 h-4" />

@@ -150,12 +150,14 @@ const ProductDetail = () => {
                   <>
                     <button
                       onClick={prevImage}
+                      aria-label="Previous product image"
                       className="absolute left-5 top-1/2 -translate-y-1/2 p-3 bg-background/90 backdrop-blur-md hover:bg-background transition-all duration-300 opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0"
                     >
                       <ChevronLeft className="w-5 h-5" />
                     </button>
                     <button
                       onClick={nextImage}
+                      aria-label="Next product image"
                       className="absolute right-5 top-1/2 -translate-y-1/2 p-3 bg-background/90 backdrop-blur-md hover:bg-background transition-all duration-300 opacity-0 group-hover:opacity-100 translate-x-2 group-hover:translate-x-0"
                     >
                       <ChevronRight className="w-5 h-5" />
@@ -167,6 +169,7 @@ const ProductDetail = () => {
                         <button
                           key={index}
                           onClick={() => setCurrentImageIndex(index)}
+                          aria-label={`Show product image ${index + 1}`}
                           className={cn(
                             "w-8 h-0.5 transition-all duration-500",
                             index === currentImageIndex
@@ -196,6 +199,7 @@ const ProductDetail = () => {
                     <button
                       key={index}
                       onClick={() => setCurrentImageIndex(index)}
+                      aria-label={`Show ${product.name} image ${index + 1}`}
                       className={cn(
                         "w-24 h-24 overflow-hidden transition-all duration-300",
                         index === currentImageIndex
@@ -206,6 +210,8 @@ const ProductDetail = () => {
                       <img
                         src={image}
                         alt={`${product.name} view ${index + 1}`}
+                        loading="lazy"
+                        decoding="async"
                         className="w-full h-full object-cover"
                       />
                     </button>

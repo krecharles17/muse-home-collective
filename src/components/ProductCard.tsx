@@ -49,6 +49,8 @@ export const ProductCard = ({ product, index = 0, variant = "default" }: Product
           <img
             src={product.images[0]}
             alt={product.name}
+            loading="lazy"
+            decoding="async"
             className={cn(
               "w-full h-full object-cover transition-all duration-[1s] ease-out",
               hasSecondImage
@@ -62,6 +64,8 @@ export const ProductCard = ({ product, index = 0, variant = "default" }: Product
             <img
               src={product.images[1]}
               alt={`${product.name} - alternate view`}
+              loading="lazy"
+              decoding="async"
               className="absolute inset-0 w-full h-full object-cover opacity-0 scale-105 transition-all duration-[1s] ease-out group-hover:opacity-100 group-hover:scale-100"
             />
           )}
@@ -72,6 +76,7 @@ export const ProductCard = ({ product, index = 0, variant = "default" }: Product
           {/* Wishlist button */}
           <button
             onClick={handleWishlistToggle}
+            aria-label={inWishlist ? `Remove ${product.name} from wishlist` : `Add ${product.name} to wishlist`}
             className={cn(
               "absolute top-5 right-5 p-2.5 rounded-full transition-all duration-500",
               "bg-background/90 backdrop-blur-md hover:bg-background shadow-sm",

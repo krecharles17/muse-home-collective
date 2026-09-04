@@ -36,8 +36,9 @@ export const filterAndSortProducts = (
   let result = [...products];
   if (collectionSlug !== "all") {
     const collection = collections.find((candidate) => candidate.slug === collectionSlug);
-    result = collection ? result.filter((product) => product.collection === collection.id) : result;
+    result = collection ? result.filter((product) => product.collection === collection.id) : [];
   }
+
 
   switch (sort) {
     case "newest":

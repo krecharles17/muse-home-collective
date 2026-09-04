@@ -58,10 +58,12 @@ describe("filterAndSortProducts", () => {
     expect(desc).toEqual([900, 300, 50, 20]);
   });
 
-  it("sorts by name case-insensitively", () => {
+  it("sorts by name using locale-aware ordering", () => {
     const names = filterAndSortProducts(products, collections, "all", "name-asc").map((p) => p.name);
-    expect(names).toEqual([...names].sort((a, b) => a.localeCompare(b.name)));
-    expect(names[0]).toBe("alpha Lamp");
+    expect(names).toHaveLength(4);
+    for (let i = 1; i < names.length; i++) {
+      expect(names[i - 1].localeCompare(names[i])).toBeLessThanOrEqual(0);
+    }
   });
 
   it("puts featured products first for the featured sort", () => {

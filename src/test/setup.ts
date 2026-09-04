@@ -15,7 +15,30 @@ Object.defineProperty(globalThis, "localStorage", {
   },
 });
 
+class MockIntersectionObserver {
+  root = null;
+  rootMargin = "";
+  thresholds: number[] = [];
+  observe() {}
+  unobserve() {}
+  disconnect() {}
+  takeRecords() {
+    return [];
+  }
+}
+Object.defineProperty(globalThis, "IntersectionObserver", {
+  configurable: true,
+  writable: true,
+  value: MockIntersectionObserver,
+});
+
 if (typeof window !== "undefined") {
+  Object.defineProperty(window, "IntersectionObserver", {
+    configurable: true,
+    writable: true,
+    value: MockIntersectionObserver,
+  });
+
   Object.defineProperty(window, "matchMedia", {
     writable: true,
     value: (query: string) => ({
